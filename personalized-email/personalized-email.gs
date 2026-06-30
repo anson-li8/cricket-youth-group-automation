@@ -6,6 +6,12 @@ const CONFIG = {
   REPLY_TO_EMAIL    : "ansonyuanruili@gmail.com",
   SIGNUP_URL    : "https://www.signupgenius.com/go/10C0845A4A62EA7FBC61-64584677-city"
 }
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('Cricket Management')
+    .addItem('Send Personalized Drafts', 'executeDrafter')
+    .addToUi();
+}
 const STUDENT_VERSION = {
   SUBJECT: "{FIRST_NAME}, we need your help for the July 4th Dragon Dance! 🐉",
   GREETING: "Hi {FIRST_NAME},",
