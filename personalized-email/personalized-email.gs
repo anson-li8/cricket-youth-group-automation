@@ -20,7 +20,7 @@ const STUDENT_VERSION = {
   PARAGRAPHS: [
     "Eric and I will be the President and VP for this upcoming year, and we really look forward to working with everyone!",
     "We are reaching out to you individually because we urgently need volunteers for the Dragon Dance at the July 4th Parade this Saturday. Since you are a valued member of our group, we would really appreciate your help to make sure our team has enough people to run this event.",
-    "It'll be a great start to our new term together, you'll get some easy volunteer hours, and you might even meet some friends. Please use the button below to sign up!"
+    "It'll be a great start to our new term together, you'll get some easy volunteer hours (4.5 hours), and you might even make some new friends. Please use the button below to sign up and let me know if you have any questions!"
   ],
   CTA_BUTTON_TEXT: "Join the Dragon Dance Team"
 };
