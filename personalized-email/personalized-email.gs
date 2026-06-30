@@ -41,46 +41,52 @@ function executeDrafter() {
   const rows = sheet.getDataRange().getValues();
   let draftCount = 0;
 
-  const parents = {};
-  const students = [];
+  const parentOnly = {};
+  const studentDirect = [];
 
-  // group siblings to prevent spam
+  // sort roster into direct students vs parent-only
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
     const fullName = String(row[CONFIG.COL_STUDENT_NAME]).trim();
     const studentEmail = String(row[CONFIG.COL_STUDENT_EMAIL]).trim();
     const parentEmail = String(row[CONFIG.COL_PARENT_EMAIL]).trim();
 
-    if (!studentEmail || !studentEmail.includes("@") || !fullName) continue;
+    if (!fullName) continue;
 
     const firstName = fullName.split(" ")[0];
-    const pEmailLower = parentEmail.toLowerCase();
-    const sEmailLower = studentEmail.toLowerCase();
+    const sEmail = studentEmail.toLowerCase();
+    const pEmail = parentEmail.toLowerCase();
 
-    if (pEmailLower && pEmailLower.includes("@")) {
-      if (!parents[pEmailLower]) {
-        parents[pEmailLower] = { target: parentEmail, names: [] };
-      }
-      parents[pEmailLower].names.push(firstName);
+    const validStudent = sEmail.includes("@");
+    const validParent = pEmail.includes("@");
 
-      if (sEmailLower !== pEmailLower) {
-        students.push({ email: studentEmail, name: firstName });
+    // parent only: student email is blank or exact same as parent
+    if (!validStudent || sEmail === pEmail) {
+      if (validParent) {
+        if (!parentOnly[pEmail]) {
+          parentOnly[pEmail] = { to: parentEmail, names: [] };
+        }
+        parentOnly[pEmail].names.push(firstName);
       }
     } else {
-      students.push({ email: studentEmail, name: firstName });
+      // student has distinct email
+      studentDirect.push({
+        to: studentEmail,
+        cc: validParent ? parentEmail : null,
+        name: firstName
+      });
     }
   }
 
-  const options = {
+  const baseOptions = {
     name: CONFIG.SENDER_NAME,
     replyTo: CONFIG.REPLY_TO_EMAIL
   };
-
   const fallback = "Please use an HTML-compatible client to view this message.";
 
-  // draft parent emails
-  for (const key in parents) {
-    const p = parents[key];
+  // draft parent-only emails grouped by siblings
+  for (const key in parentOnly) {
+    const p = parentOnly[key];
     let joinedNames = p.names[0];
     
     if (p.names.length === 2) {
@@ -97,13 +103,13 @@ function executeDrafter() {
       PARENT_VERSION.CTA_BUTTON_TEXT
     );
 
-    options.htmlBody = htmlBody;
-    GmailApp.createDraft(p.target, subject, fallback, options);
+    const options = { ...baseOptions, htmlBody: htmlBody };
+    GmailApp.createDraft(p.to, subject, fallback, options);
     draftCount++;
   }
 
-  // draft student emails
-  for (const s of students) {
+  // draft student emails with parent cc
+  for (const s of studentDirect) {
     const subject = STUDENT_VERSION.SUBJECT.replace(/{FIRST_NAME}/g, s.name);
     const htmlBody = renderHtml(
       STUDENT_VERSION.GREETING.replace(/{FIRST_NAME}/g, s.name),
@@ -112,8 +118,12 @@ function executeDrafter() {
       STUDENT_VERSION.CTA_BUTTON_TEXT
     );
 
-    options.htmlBody = htmlBody;
-    GmailApp.createDraft(s.email, subject, fallback, options);
+    const options = { ...baseOptions, htmlBody: htmlBody };
+    if (s.cc) {
+      options.cc = s.cc;
+    }
+
+    GmailApp.createDraft(s.to, subject, fallback, options);
     draftCount++;
   }
 
