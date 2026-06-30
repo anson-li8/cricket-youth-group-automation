@@ -18,9 +18,9 @@ const STUDENT_VERSION = {
   SUBJECT: "{FIRST_NAME}, we need your help for the July 4th Dragon Dance!",
   GREETING: "Hi {FIRST_NAME},",
   PARAGRAPHS: [
-    "Eric and I were just officially elected as President and VP for this upcoming year, and we really look forward to working with everyone!",
+    "Eric and I will be the President and VP for this upcoming year, and we really look forward to working with everyone!",
     "We are reaching out to you individually because we urgently need volunteers for the Dragon Dance at the July 4th Parade this Saturday. Since you are a valued member of our group, we would really appreciate your help to make sure our team has enough people to run this event.",
-    "It will be a great way to start off our new term together, catch up with friends, and get some easy volunteer hours. Please use the button below to reserve your spot on the signup sheet!"
+    "It'll be a great start to our new term together, you'll get some easy volunteer hours, and you might even meet some friends. Please use the button below to sign up!"
   ],
   CTA_BUTTON_TEXT: "Join the Dragon Dance Team"
 };
@@ -29,9 +29,9 @@ const PARENT_VERSION = {
   SUBJECT: "July 4th Parade Dragon Dance — Volunteer Invitation for {FIRST_NAME}",
   GREETING: "Dear Parents & Family of {FIRST_NAME},",
   PARAGRAPHS: [
-    "My name is Anson Li, and along with Eric Zhang, we were just officially elected as the new President and VP of the Cricket Youth Volunteer Group for the upcoming year.",
+    "My name is Anson Li, and along with Eric Zhang, we will be the new President and VP of the Cricket Youth Volunteer Group for the upcoming year.",
     "We are reaching out to your family because our group urgently needs additional youth volunteers for our Dragon Dance team at the upcoming Fourth of July Parade this Saturday morning.",
-    "Since we highly value {FIRST_NAME} in our group, we would be incredibly grateful if they could join us. It is a wonderful community celebration and an excellent event to earn some volunteer hours. If they are available to help, please use the button below to access the signup window."
+    "Since we highly value {FIRST_NAME} in our group, we would be incredibly grateful if they could join us. It's a wonderful community celebration and an excellent event to earn some volunteer hours. If they are available to help, please use the button below to access the signup sheet."
   ],
   CTA_BUTTON_TEXT: "Register Your Child to Volunteer"
 };
